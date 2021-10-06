@@ -8,17 +8,18 @@ import (
 	"github.com/nikitamirzani323/gobackend_mastertoto/router"
 )
 
-var key string = configs.Keymap[2]
+var key string = configs.Keymap[60]
 var source string = configs.Sourcechar
 
 func main() {
 	configs.Init()
 	app := router.Init()
 
-	data := "Hello World"
+	data := "Indosuperbet.com dan nuke.com"
 
 	temp_encr := ""
 	temp_decp := ""
+	log.Println(len(configs.Keymap))
 	log.Println(len(source))
 	log.Println(len(key))
 	// log.Println(string(key[1]))
@@ -48,8 +49,8 @@ func main() {
 
 	// log.Println(string(80))
 	log.Println(data)
-	log.Println(temp_encr)
-	log.Println(temp_decp)
+	log.Println(temp_encr + "|60")
+	log.Println(temp_decp + "|60")
 
 	log.Fatal(app.Listen(":7071"))
 }
