@@ -6,8 +6,8 @@
     let msg;
     let flag;
     const schema = yup.object().shape({
-        username: yup.string().required().matches(/^[a-zA-z0-9]{1,20}+$/, "Username must Character A-Z or a-z or 1-9 ").min(4).max(20),
-        password: yup.string().required().matches(/^[a-zA-z0-9]{1,20}+$/, "Password must Character A-Z or a-z or 1-9 ").min(4).max(50)
+        username: yup.string().required().matches(/^[a-zA-z0-9]+$/, "Username must Character A-Z or a-z or 1-9 ").min(4).max(20),
+        password: yup.string().required().matches(/^[a-zA-z0-9]+$/, "Password must Character A-Z or a-z or 1-9 ").min(4).max(50)
     });
     const { form, errors, handleChange, handleSubmit } = createForm({
         initialValues: {
@@ -46,6 +46,7 @@
        
         if ($errors.username || $errors.password){
             alert($errors.username+"\n"+$errors.password)
+            form.username = ""
         }
     }
 </script>
