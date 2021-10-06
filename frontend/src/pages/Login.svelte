@@ -1,22 +1,27 @@
 <script>
-    let username = "";
-    let password = "";
+    import { createForm } from "svelte-forms-lib";
+    import * as yup from "yup";
+
+   
     let msg;
     let flag;
-
-    async function handleSubmit() {
-        flag = true;
-        msg = "";
-        if (username == "") {
-            flag = false;
-            msg += "The username is required\n";
+    const schema = yup.object().shape({
+        username: yup.string().required().min(4).max(50),
+        password: yup.string().required().min(4).max(30)
+    });
+    const { form, errors, handleChange, handleSubmit } = createForm({
+        initialValues: {
+            username: "",
+            password:""
+        },
+        validationSchema: schema,
+        onSubmit:(values) => {
+           handleSave(values.username,values.password)
         }
-        if (password == "") {
-            flag = false;
-            msg += "The Password is required\n";
-        }
-        if (flag) {
-            const res = await fetch("/api/login", {
+    })
+   
+    async function handleSave(username,password) {
+        const res = await fetch("/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,8 +41,11 @@
                 localStorage.setItem("master", username);
                 window.location.href = "/";
             }
-        } else {
-            alert(msg);
+    }
+    $:{
+       
+        if ($errors.username || $errors.password){
+            alert($errors.username+"\n"+$errors.password)
         }
     }
 </script>
@@ -56,8 +64,12 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <input
-                                bind:value={username}
+                                on:change="{handleChange}"
+                                bind:value={$form.username}
+                                invalid={$errors.username.length > 0}
                                 type="text"
+                                name="username"
+                                id="username"
                                 class="form-control"
                                 placeholder="Username"
                                 aria-label="Username"
@@ -65,9 +77,13 @@
                         </div>
                         <div class="mb-3">
                             <input
-                                bind:value={password}
+                                on:change="{handleChange}"
+                                bind:value={$form.password}
+                                invalid={$errors.password.length > 0}
                                 type="password"
                                 class="form-control"
+                                name="password"
+                                id="password"
                                 placeholder="Password"
                                 aria-label="Password"
                             />
