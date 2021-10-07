@@ -28,18 +28,18 @@ func main() {
 		// temp_encr += string(key[i])
 		temp_indexsource := s.Index(source, string(data[i]))
 		temp_indexkey := s.Index(key, string(key[temp_indexsource]))
-		temp_stringkey := keyback(temp_indexkey)
+		// temp_stringkey := keyback(temp_indexkey)
 		temp_encr += string(key[temp_indexkey])
-		log.Printf("%d - %d - %s", temp_indexsource, temp_indexkey, temp_stringkey)
+		// log.Printf("%d - %d - %s", temp_indexsource, temp_indexkey, temp_stringkey)
 	}
 	for i := 0; i < len(temp_encr); i++ {
 		// log.Println(string(data[i]))
 		// temp_encr += string(key[i])
 		temp_indexkey := s.Index(key, string(key[i]))
 		temp_indexsource := s.Index(source, string(data[temp_indexkey]))
-		temp_stringkey := sourceback(temp_indexsource)
+		// temp_stringkey := sourceback(temp_indexsource)
 		temp_decp += string(source[temp_indexsource])
-		log.Printf("%d - %d - %s", temp_indexsource, temp_indexkey, temp_stringkey)
+		// log.Printf("%d - %d - %s", temp_indexsource, temp_indexkey, temp_stringkey)
 	}
 	// for x := 0; x < len(source); x++ {
 	// 	if source[x] == 80 {
