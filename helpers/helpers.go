@@ -6,7 +6,10 @@ import (
 	"math"
 	"math/rand"
 	"strconv"
+	s "strings"
 	"time"
+
+	"github.com/nikitamirzani323/gobackend_mastertoto/configs"
 )
 
 func HashPasswordMD5(password string) string {
@@ -39,4 +42,33 @@ func Round(num float64) int {
 func ToFixed(num float64, precision int) float64 {
 	output := math.Pow(10, float64(precision))
 	return float64(Round(num*output)) / output
+}
+func Encryption(datatext string) (string, int) {
+	min := 0
+	max := 149
+	rand.Seed(time.Now().UnixNano())
+	// keymap := rand.Intn(max-min) + min
+	keymap := rand.Intn(max-min) + min
+	var key string = configs.Keymap[keymap]
+	var source string = configs.Sourcechar
+	result := ""
+	for i := 0; i < len(datatext); i++ {
+		temp_indexsource := s.Index(source, string(datatext[i]))
+		temp_indexkey := s.Index(key, string(key[temp_indexsource]))
+		result += string(key[temp_indexkey])
+	}
+	return result, keymap
+}
+func Decryption(dataencrypt string) string {
+	temp := s.Split(dataencrypt, "|")
+	keymap, _ := strconv.Atoi(temp[1])
+	var key string = configs.Keymap[keymap]
+	var source string = configs.Sourcechar
+	result := ""
+	for i := 0; i < len(temp[0]); i++ {
+		temp_indexkey := s.Index(key, string(dataencrypt[i]))
+		temp_indexsource := s.Index(source, string(source[temp_indexkey]))
+		result += string(source[temp_indexsource])
+	}
+	return result
 }
