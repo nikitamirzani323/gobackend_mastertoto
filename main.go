@@ -13,7 +13,7 @@ func main() {
 	db.Init()
 	app := router.Init()
 
-	data := "aaaabr==isb"
+	data := "aaaabrpantaiputihglenfredly==isb"
 
 	temp_encr, keymap := helpers.Encryption(data)
 	temp_encr_final := temp_encr + "|" + strconv.Itoa(keymap)

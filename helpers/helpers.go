@@ -47,7 +47,6 @@ func Encryption(datatext string) (string, int) {
 	min := 0
 	max := 149
 	rand.Seed(time.Now().UnixNano())
-	// keymap := rand.Intn(max-min) + min
 	keymap := rand.Intn(max-min) + min
 	var key string = configs.Keymap[keymap]
 	var source string = configs.Sourcechar
